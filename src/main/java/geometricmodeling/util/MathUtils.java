@@ -43,28 +43,29 @@ public final class MathUtils {
         };
     }
 
-    public static double[] getXValues(Point[] points, Point center, double scale) {
-        double[] xValues = new double[points.length];
+    public static double[] calculateXPointsByCenterAndScale(Point[] points, Point center, double scale) {
+        double[] xPoints = new double[points.length];
 
         for (int i = 0; i < points.length; i++) {
-            xValues[i] = center.getX() + points[i].getX() * scale;
+            xPoints[i] = center.getX() + points[i].getX() * scale;
         }
 
-        return xValues;
+        return xPoints;
     }
 
-    public static double[] getYValues(Point[] points, Point center, double scale) {
-        double[] yValues = new double[points.length];
+    public static double[] calculateYPointsByCenterAndScale(Point[] points, Point center, double scale) {
+        double[] yPoints = new double[points.length];
 
         for (int i = 0; i < points.length; i++) {
-            yValues[i] = center.getY() + points[i].getY() * scale;
+            yPoints[i] = center.getY() + points[i].getY() * scale;
         }
 
-        return yValues;
+        return yPoints;
     }
 
-    public static double[] getZValues(Point[] points, Point center, double scale, ProjectionView projectionView) {
-        double[] zValues = new double[points.length];
+    public static double[] calculateZPointsByCenterAndScale(Point[] points, Point center, double scale,
+                                                            ProjectionView projectionView) {
+        double[] zPoints = new double[points.length];
         double zCenter;
 
         switch (projectionView) {
@@ -75,14 +76,14 @@ public final class MathUtils {
                 zCenter = center.getX();
                 break;
             default:
-                throw new IllegalArgumentException("There is no such projection view");
+                throw new IllegalArgumentException("There is no such projection view.");
         }
 
         for (int i = 0; i < points.length; i++) {
-            zValues[i] = zCenter + points[i].getZ() * scale;
+            zPoints[i] = zCenter + points[i].getZ() * scale;
         }
 
-        return zValues;
+        return zPoints;
     }
 
     public static double[][] multiply(double[][] matrixA, double[][] matrixB) {
@@ -92,7 +93,8 @@ public final class MathUtils {
         int matrixBColumns = matrixB[0].length;
 
         if (matrixAColumns != matrixBRows) {
-            throw new IllegalArgumentException("Columns in matrix a: " + matrixAColumns + " didn't match rows in matrix b: " + matrixBRows);
+            throw new IllegalArgumentException("Columns in matrix a: " + matrixAColumns
+                    + " didn't match rows in matrix b: " + matrixBRows);
         }
 
         double[][] matrixC = new double[matrixARows][matrixBColumns];

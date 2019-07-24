@@ -12,8 +12,6 @@ public final class Constants {
     public static final int CANVAS_WIDTH = 850;
     public static final int CANVAS_HEIGHT = 600;
 
-    public static final String EMPTY_STRING = "";
-
     public static final String PHI = "phi";
     public static final String RHO = "rho";
     public static final String THETA = "theta";
@@ -25,14 +23,6 @@ public final class Constants {
 
     public static final String L = "l";
     public static final String ALPHA = "alpha";
-
-    public static final String FRONT = "Front";
-    public static final String TOP = "Top";
-    public static final String SIDE = "Side";
-
-    public static final String X = "x";
-    public static final String Y = "y";
-    public static final String Z = "z";
 
     private Constants() {
     }

@@ -39,8 +39,6 @@ public class GeometricModeling extends Application {
             Controller controller = loader.getController();
             controller.initializeDrawer(canvas);
 
-            System.out.println("Hello, world!");
-            
             primaryStage.setTitle(GEOMETRIC_MODELING);
             primaryStage.setScene(new Scene(root));
             primaryStage.setResizable(false);

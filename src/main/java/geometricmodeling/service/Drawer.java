@@ -9,45 +9,63 @@ import geometricmodeling.model.*;
 import geometricmodeling.util.MathUtils;
 import geometricmodeling.util.TorusUtils;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Drawer {
+    private static final String FRONT = "Front";
+    private static final String TOP = "Top";
+    private static final String SIDE = "Side";
+
+    private static final String X = "x";
+    private static final String Y = "y";
+    private static final String Z = "z";
+
     private Canvas canvas;
+    private GraphicsContext graphicsContext;
 
     public Drawer(Canvas canvas) {
         this.canvas = canvas;
+        graphicsContext = this.canvas.getGraphicsContext2D();
     }
 
-    public void drawView(List<Plane> facets, Projection projection, boolean isLightSelected, Color color, Point lightPosition) {
+    public void drawView(List<Plane> facets, Projection projection, boolean isLightSelected,
+                         Color color, Point lightPosition) {
         Point center = getCanvasCenter();
         drawCoordinateAxes(projection);
 
         switch (projection) {
             case OBLIQUE:
-                drawProjection(facets, center, PlaneType.XOY, Constants.DEFAULT_SCALE, isLightSelected, color, lightPosition);
+                drawProjection(facets, center, PlaneType.XOY, Constants.DEFAULT_SCALE, isLightSelected, color,
+                        lightPosition);
                 break;
             case ORTHOGONAL:
-                Point quarter = getCanvasQuarter();
-                Point frontCenter = new Point(center.getX() - quarter.getX(), center.getY() - quarter.getY(), 0);
-                Point sideCenter = new Point(center.getX() + quarter.getX(), center.getY() - quarter.getY(), 0);
-                Point topCenter = new Point(center.getX() - quarter.getX(), center.getY() + quarter.getY(), 0);
+                Point canvasQuarter = getCanvasQuarter();
+
+                double centerX = center.getX();
+                double centerY = center.getY();
+                double canvasQuarterX = canvasQuarter.getX();
+                double canvasQuarterY = canvasQuarter.getY();
+
+                Point frontCenter = new Point(centerX - canvasQuarterX, centerY - canvasQuarterY, 0);
+                Point sideCenter = new Point(centerX + canvasQuarterX, centerY - canvasQuarterY, 0);
+                Point topCenter = new Point(centerX - canvasQuarterX, centerY + canvasQuarterY, 0);
+
+                double scaleCoefficient = Constants.DEFAULT_SCALE / 2;
 
                 TorusUtils.sortFacets(facets, SortOrder.Z_ASCENDING);
-                drawProjection(facets, frontCenter, PlaneType.XOY, Constants.DEFAULT_SCALE / 2, isLightSelected, color, lightPosition);
+                drawProjection(facets, frontCenter, PlaneType.XOY, scaleCoefficient, isLightSelected, color, lightPosition);
 
                 TorusUtils.sortFacets(facets, SortOrder.X_ASCENDING);
-                drawProjection(facets, sideCenter, PlaneType.ZOY, Constants.DEFAULT_SCALE / 2, isLightSelected, color, lightPosition);
+                drawProjection(facets, sideCenter, PlaneType.ZOY, scaleCoefficient, isLightSelected, color, lightPosition);
 
                 TorusUtils.sortFacets(facets, SortOrder.Y_ASCENDING);
-                drawProjection(facets, topCenter, PlaneType.XOZ, Constants.DEFAULT_SCALE / 2, isLightSelected, color, lightPosition);
+                drawProjection(facets, topCenter, PlaneType.XOZ, scaleCoefficient, isLightSelected, color, lightPosition);
                 break;
             case AXONOMETRIC:
-                TorusUtils.sortFacets(facets, SortOrder.Z_ASCENDING);
-                drawProjection(facets, center, PlaneType.XOY, Constants.DEFAULT_SCALE, isLightSelected, color, lightPosition);
-                break;
             case PERSPECTIVE:
                 TorusUtils.sortFacets(facets, SortOrder.Z_ASCENDING);
                 drawProjection(facets, center, PlaneType.XOY, Constants.DEFAULT_SCALE, isLightSelected, color, lightPosition);
@@ -63,23 +81,27 @@ public class Drawer {
                 Point canvasCenter = getCanvasCenter();
                 Point canvasQuarter = getCanvasQuarter();
 
-                Point front = new Point(canvasCenter.getX() - canvasQuarter.getX(), canvasCenter.getY() - canvasQuarter.getY(), 0);
-                Point side = new Point(canvasCenter.getX() + canvasQuarter.getX(), canvasCenter.getY() - canvasQuarter.getY(), 0);
-                Point top = new Point(canvasCenter.getX() - canvasQuarter.getX(), canvasCenter.getY() + canvasQuarter.getY(), 0);
+                double canvasCenterX = canvasCenter.getX();
+                double canvasCenterY = canvasCenter.getY();
+                double canvasQuarterX = canvasQuarter.getX();
+                double canvasQuarterY = canvasQuarter.getY();
+
+                Point front = new Point(canvasCenterX - canvasQuarterX, canvasCenterY - canvasQuarterY, 0);
+                Point side = new Point(canvasCenterX + canvasQuarterX, canvasCenterY - canvasQuarterY, 0);
+                Point top = new Point(canvasCenterX - canvasQuarterX, canvasCenterY + canvasQuarterY, 0);
                 double orthogonalTextOffset = 50;
 
-                canvas.getGraphicsContext2D()
-                        .strokeText(Constants.FRONT,
-                                front.getX() - orthogonalTextOffset * 3,
-                                front.getY() - orthogonalTextOffset * 2);
-                canvas.getGraphicsContext2D()
-                        .strokeText(Constants.TOP,
-                                top.getX() - orthogonalTextOffset * 3,
-                                top.getY() - orthogonalTextOffset * 3);
-                canvas.getGraphicsContext2D()
-                        .strokeText(Constants.SIDE,
-                                side.getX() - orthogonalTextOffset * 3,
-                                side.getY() - orthogonalTextOffset * 2);
+                double frontX = front.getX() - orthogonalTextOffset * 3;
+                double frontY = front.getY() - orthogonalTextOffset * 2;
+                graphicsContext.strokeText(FRONT, frontX, frontY);
+
+                double topX = top.getX() - orthogonalTextOffset * 3;
+                double topY = top.getY() - orthogonalTextOffset * 3;
+                graphicsContext.strokeText(TOP, topX, topY);
+
+                double sideX = side.getX() - orthogonalTextOffset * 3;
+                double sideY = side.getY() - orthogonalTextOffset * 2;
+                graphicsContext.strokeText(SIDE, sideX, sideY);
                 break;
             case OBLIQUE:
             case PERSPECTIVE:
@@ -88,22 +110,17 @@ public class Drawer {
                 double increment = 50;
                 double offset = 100;
                 Point start = new Point(offset / 2, offset, offset);
+                double startX = start.getX();
+                double startY = start.getY();
 
-                canvas.getGraphicsContext2D().strokeText(Constants.Y, start.getX(), start.getY() - increment - textOffset);
-                canvas.getGraphicsContext2D().strokeLine(start.getX(), start.getY(), start.getX(), start.getY() - increment);
+                graphicsContext.strokeText(Y, startX, startY - increment - textOffset);
+                graphicsContext.strokeLine(startX, startY, startX, startY - increment);
 
-                canvas.getGraphicsContext2D()
-                        .strokeText(Constants.X, start.getX() + increment + textOffset, start.getY());
-                canvas.getGraphicsContext2D()
-                        .strokeLine(start.getX(), start.getY(), start.getX() + increment, start.getY());
+                graphicsContext.strokeText(X, startX + increment + textOffset, startY);
+                graphicsContext.strokeLine(startX, startY, startX + increment, startY);
 
-                canvas.getGraphicsContext2D().strokeText(Constants.Z,
-                        start.getX() + increment + textOffset,
-                        start.getY() - increment - textOffset);
-
-                canvas.getGraphicsContext2D().strokeLine(start.getX(), start.getY(),
-                        start.getX() + increment,
-                        start.getY() - increment);
+                graphicsContext.strokeText(Z, startX + increment + textOffset, startY - increment - textOffset);
+                graphicsContext.strokeLine(startX, startY, startX + increment, startY - increment);
                 break;
             default:
                 throw new IllegalArgumentException("There is no such projection.");
@@ -111,14 +128,14 @@ public class Drawer {
     }
 
     private void drawProjection(List<Plane> facets, Point center, PlaneType planeType,
-                                double scaleCoefficient, boolean withLight, Color color, Point lightPosition) {
+                                double scaleCoefficient, boolean isLightSelected, Color color, Point lightPosition) {
         for (Plane facet : facets) {
-            drawFacet(facet, center, planeType, scaleCoefficient, withLight, color, lightPosition);
+            drawFacet(facet, center, planeType, scaleCoefficient, isLightSelected, color, lightPosition);
         }
     }
 
     private void drawFacet(Plane facet, Point center, PlaneType planeType,
-                           double scale, boolean withLight, Color color, Point lightPosition) {
+                           double scale, boolean isLightSelected, Color color, Point lightPosition) {
         List<Line> ribs = facet.getLines();
         List<Point> facetPoints = new ArrayList<>();
 
@@ -133,42 +150,52 @@ public class Drawer {
 
         switch (planeType) {
             case XOY:
-                xPoints = MathUtils.getXValues(facetPoints.toArray(new Point[size]), center, scale);
-                yPoints = MathUtils.getYValues(facetPoints.toArray(new Point[size]), center, -scale);
+                xPoints = MathUtils.calculateXPointsByCenterAndScale(
+                        facetPoints.toArray(new Point[size]), center, scale);
+                yPoints = MathUtils.calculateYPointsByCenterAndScale(
+                        facetPoints.toArray(new Point[size]), center, -scale);
                 break;
             case XOZ:
-                xPoints = MathUtils.getXValues(facetPoints.toArray(new Point[size]), center, scale);
-                yPoints = MathUtils.getZValues(facetPoints.toArray(new Point[size]), center, -scale, ProjectionView.TOP);
+                xPoints = MathUtils.calculateXPointsByCenterAndScale(
+                        facetPoints.toArray(new Point[size]), center, scale);
+                yPoints = MathUtils.calculateZPointsByCenterAndScale(
+                        facetPoints.toArray(new Point[size]), center, -scale, ProjectionView.TOP);
                 break;
             case ZOY:
-                xPoints = MathUtils.getZValues(facetPoints.toArray(new Point[size]), center, scale, ProjectionView.SIDE);
-                yPoints = MathUtils.getYValues(facetPoints.toArray(new Point[size]), center, -scale);
+                xPoints = MathUtils.calculateZPointsByCenterAndScale(
+                        facetPoints.toArray(new Point[size]), center, scale, ProjectionView.SIDE);
+                yPoints = MathUtils.calculateYPointsByCenterAndScale(
+                        facetPoints.toArray(new Point[size]), center, -scale);
                 break;
             default:
                 throw new IllegalArgumentException("There is no such plane type.");
         }
 
-        canvas.getGraphicsContext2D().setStroke(Color.BLACK);
-        canvas.getGraphicsContext2D().strokePolygon(xPoints, yPoints, size);
+        graphicsContext.setStroke(Color.BLACK);
+        graphicsContext.strokePolygon(xPoints, yPoints, size);
 
-        if (withLight) {
-            double lightLength = Math
-                    .sqrt(Math.pow((lightPosition.getX() - center.getX()), 2)
-                            + Math.pow((lightPosition.getY() - center.getY()), 2)
-                            + Math.pow((lightPosition.getZ() - center.getZ()), 2));
+        if (isLightSelected) {
+            double lightPositionX = lightPosition.getX();
+            double lightPositionY = lightPosition.getY();
+            double lightPositionZ = lightPosition.getZ();
+
+            double lightLength = Math.sqrt(
+                    Math.pow((lightPositionX - center.getX()), 2)
+                            + Math.pow((lightPositionY - center.getY()), 2)
+                            + Math.pow((lightPositionZ - center.getZ()), 2));
 
             double length = Math
-                    .sqrt(Math.pow((lightPosition.getX() - facet.getCenter().getX()), 2)
-                            + Math.pow((lightPosition.getY() - facet.getCenter().getY()), 2)
-                            + Math.pow((lightPosition.getZ() - facet.getCenter().getZ()), 2));
+                    .sqrt(Math.pow((lightPositionX - facet.getCenter().getX()), 2)
+                            + Math.pow((lightPositionY - facet.getCenter().getY()), 2)
+                            + Math.pow((lightPositionZ - facet.getCenter().getZ()), 2));
 
-            double persent = 1 - length / (lightLength <= 0 ? 1 : lightLength);
-            persent = Math.abs(persent) > 1 ? 0.2 : Math.abs(persent) * 1.5;
-            persent = persent > 1 ? 1 : persent;
+            double percent = 1 - length / (lightLength <= 0 ? 1 : lightLength);
+            percent = Math.abs(percent) > 1 ? 0.2 : Math.abs(percent) * 1.5;
+            percent = percent > 1 ? 1 : percent;
 
-            Color newColor = Color.rgb((int) (color.getRed() * 255 * persent),
-                    (int) (color.getGreen() * 255 * persent),
-                    (int) (color.getBlue() * 255 * persent));
+            Color newColor = Color.rgb((int) (color.getRed() * 255 * percent),
+                    (int) (color.getGreen() * 255 * percent),
+                    (int) (color.getBlue() * 255 * percent));
 
             if (lightLength < length) {
                 newColor = Color.rgb((int) (color.getRed() * 255 * 0.2),
@@ -176,18 +203,18 @@ public class Drawer {
                         (int) (color.getBlue() * 255 * 0.2));
             }
 
-            canvas.getGraphicsContext2D().setFill(newColor);
-            canvas.getGraphicsContext2D().strokePolygon(xPoints, yPoints, size);
-            canvas.getGraphicsContext2D().fillPolygon(xPoints, yPoints, size);
+            graphicsContext.setFill(newColor);
+            graphicsContext.strokePolygon(xPoints, yPoints, size);
+            graphicsContext.fillPolygon(xPoints, yPoints, size);
         } else {
-            canvas.getGraphicsContext2D().setFill(color);
-            canvas.getGraphicsContext2D().strokePolygon(xPoints, yPoints, size);
-            canvas.getGraphicsContext2D().fillPolygon(xPoints, yPoints, size);
+            graphicsContext.setFill(color);
+            graphicsContext.strokePolygon(xPoints, yPoints, size);
+            graphicsContext.fillPolygon(xPoints, yPoints, size);
         }
     }
 
     public void clear() {
-        canvas.getGraphicsContext2D().clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
     private Point getCanvasCenter() {

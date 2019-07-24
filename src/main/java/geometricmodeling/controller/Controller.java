@@ -299,15 +299,15 @@ public class Controller {
         Color color = getColor();
         boolean isLightSelected = isLightSelected();
         Point lightPosition = getLightPosition();
-        Map<String, Double> parameters = getViewParameters(projection, isViewTransformationSelected);
-        Torus newTorus = getModelView(torus, projection, parameters, isViewTransformationSelected);
+        Map<String, Double> viewParameters = getViewParameters(projection, isViewTransformationSelected);
+        Torus newTorus = getModelView(torus, projection, viewParameters, isViewTransformationSelected);
         drawer.drawView(newTorus.getFacets(), projection, isLightSelected, color, lightPosition);
     }
 
     @FXML
     private void onProjectionComboBoxClicked() {
         defineProjection();
-        disableTabs(this.projection);
+        disableTabs(projection);
     }
 
     private void defineProjection() {
