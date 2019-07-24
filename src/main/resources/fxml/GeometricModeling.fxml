@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="1200.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="geometricmodeling.controller.Controller">
+  <TabPane layoutX="500.0" layoutY="97.0" prefHeight="200.0" prefWidth="350.0" tabClosingPolicy="UNAVAILABLE"
+           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <tabs>
+      <Tab text="Model">
+        <content>
+          <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+              <GridPane layoutX="29.0" layoutY="35.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="45.0">
+                <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <children>
+                  <TextField fx:id="minorRadiusTextField" maxHeight="25.0" maxWidth="60.0" minHeight="25.0"
+                             minWidth="60.0" prefHeight="25.0" prefWidth="60.0" promptText="r"/>
+                  <TextField fx:id="majorRadiusTextField" maxHeight="25.0" maxWidth="60.0" minHeight="25.0"
+                             minWidth="60.0" prefHeight="25.0" prefWidth="60.0" promptText="R" GridPane.rowIndex="1"/>
+                  <TextField fx:id="minorAngleTextField" maxHeight="25.0" maxWidth="60.0" minHeight="25.0"
+                             minWidth="60.0" prefHeight="25.0" prefWidth="60.0" promptText="φ"
+                             GridPane.columnIndex="1"/>
+                  <TextField fx:id="majorAngleTextField" maxHeight="25.0" maxWidth="60.0" minHeight="25.0"
+                             minWidth="60.0" prefHeight="25.0" prefWidth="60.0" promptText="θ" GridPane.columnIndex="1"
+                             GridPane.rowIndex="1"/>
+                  <Button maxHeight="25.0" maxWidth="60.0" minHeight="25.0" minWidth="60.0" mnemonicParsing="false"
+                          onAction="#handleBuildButton" prefHeight="25.0" prefWidth="60.0" text="Build"
+                          GridPane.columnIndex="3"/>
+                  <Button maxHeight="25.0" maxWidth="60.0" minHeight="25.0" minWidth="60.0" mnemonicParsing="false"
+                          onAction="#handleClearButton" prefHeight="25.0" prefWidth="60.0" text="Clear"
+                          GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+                  <ColorPicker fx:id="modelColorPicker" GridPane.columnSpan="2" GridPane.rowIndex="3"/>
+                </children>
+              </GridPane>
+              <Label layoutX="25.0" layoutY="25.0" prefHeight="17.0" prefWidth="137.0" text="Torus parameters:"
+                     AnchorPane.leftAnchor="35.0"/>
+            </children>
+          </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Transformation geometry">
+        <content>
+          <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+              <GridPane alignment="TOP_CENTER" layoutY="300.0" prefHeight="100.0" prefWidth="323.0"
+                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
+                <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <children>
+                  <TextField fx:id="rotationXTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="Rx" GridPane.columnIndex="1"/>
+                  <TextField fx:id="rotationYTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="Ry" GridPane.columnIndex="2"/>
+                  <TextField fx:id="rotationZTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="Rz" GridPane.columnIndex="3"/>
+                  <Button maxHeight="25.0" maxWidth="70.0" minHeight="25.0" minWidth="70.0" mnemonicParsing="false"
+                          onAction="#handleRotateButton" prefHeight="25.0" prefWidth="70.0" text="Rotate"
+                          GridPane.columnIndex="4"/>
+                  <TextField fx:id="scalingXTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="Sx" GridPane.columnIndex="1"
+                             GridPane.rowIndex="1"/>
+                  <TextField fx:id="scalingYTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="Sy" GridPane.columnIndex="2"
+                             GridPane.rowIndex="1"/>
+                  <TextField fx:id="scalingZTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="Sz" GridPane.columnIndex="3"
+                             GridPane.rowIndex="1"/>
+                  <Button maxHeight="25.0" maxWidth="70.0" minHeight="25.0" minWidth="70.0" mnemonicParsing="false"
+                          onAction="#handleScaleButton" prefHeight="25.0" prefWidth="70.0" text="Scale"
+                          GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                  <TextField fx:id="translationXTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="Dx" GridPane.columnIndex="1"
+                             GridPane.rowIndex="2"/>
+                  <TextField fx:id="translationYTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="Dy" GridPane.columnIndex="2"
+                             GridPane.rowIndex="2"/>
+                  <TextField fx:id="translationZTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="Dz" GridPane.columnIndex="3"
+                             GridPane.rowIndex="2"/>
+                  <Button maxHeight="25.0" maxWidth="70.0" minHeight="25.0" minWidth="70.0" mnemonicParsing="false"
+                          onAction="#handleTranslateButton" prefHeight="25.0" prefWidth="70.0" text="Translate"
+                          GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+                  <Label maxHeight="15.0" maxWidth="70.0" minHeight="15.0" minWidth="70.0" prefHeight="15.0"
+                         prefWidth="70.0" text="Rotation:"/>
+                  <Label maxHeight="15.0" maxWidth="70.0" minHeight="15.0" minWidth="70.0" prefHeight="15.0"
+                         prefWidth="70.0" text="Scaling:" GridPane.rowIndex="1"/>
+                  <Label maxHeight="15.0" maxWidth="70.0" minHeight="15.0" minWidth="70.0" prefHeight="15.0"
+                         prefWidth="70.0" text="Translation:" GridPane.rowIndex="2"/>
+                </children>
+              </GridPane>
+            </children>
+          </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="View">
+        <content>
+          <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+              <CheckBox fx:id="viewTransformationCheckBox" layoutX="179.0" layoutY="137.0" mnemonicParsing="false"
+                        text="View transformation" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0"/>
+              <GridPane layoutX="45.0" layoutY="286.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="100.0">
+                <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="5.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="230.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="5.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <children>
+                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0"/>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                      <ComboBox fx:id="projectionsComboBox" onAction="#onProjectionComboBoxClicked" prefWidth="120.0"
+                                promptText="Axonometric"/>
+                      <Button mnemonicParsing="false" onAction="#handleDrawButton" text="Draw"
+                              GridPane.columnIndex="1"/>
+                    </children>
+                  </GridPane>
+                  <TabPane fx:id="projectionsTabPane" prefHeight="100.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE"
+                           GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <tabs>
+                      <Tab text="Axonometric">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="215.0" prefWidth="230.0">
+                            <children>
+                              <GridPane layoutX="14.0" layoutY="32.0" AnchorPane.leftAnchor="15.0"
+                                        AnchorPane.topAnchor="15.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"
+                                                     prefWidth="60.0"/>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"
+                                                     prefWidth="60.0"/>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"
+                                                     prefWidth="60.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER"
+                                                  vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <children>
+                                  <TextField fx:id="axonometricRotationXTextField" maxHeight="25.0" maxWidth="50.0"
+                                             minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0"
+                                             promptText="Rx"/>
+                                  <TextField fx:id="axonometricRotationYTextField" maxHeight="25.0" maxWidth="50.0"
+                                             minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0"
+                                             promptText="Ry" GridPane.columnIndex="1"/>
+                                  <TextField fx:id="axonometricRotationZTextField" maxHeight="25.0" maxWidth="50.0"
+                                             minHeight="25.0" minWidth="50.0" prefHeight="25.0" prefWidth="50.0"
+                                             promptText="Rz" GridPane.columnIndex="2"/>
+                                </children>
+                              </GridPane>
+                            </children>
+                          </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab disable="true" text="Oblique">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                              <GridPane layoutX="41.0" layoutY="11.0" AnchorPane.leftAnchor="15.0"
+                                        AnchorPane.topAnchor="15.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"
+                                                     prefWidth="60.0"/>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"
+                                                     prefWidth="60.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER"
+                                                  vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <children>
+                                  <TextField fx:id="lTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0"
+                                             minWidth="50.0" prefHeight="25.0" prefWidth="50.0" promptText="l"/>
+                                  <TextField fx:id="alphaTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0"
+                                             minWidth="50.0" prefHeight="25.0" prefWidth="50.0" promptText="α"
+                                             GridPane.columnIndex="1"/>
+                                </children>
+                              </GridPane>
+                            </children>
+                          </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab disable="true" text="Perspective">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                              <GridPane layoutX="74.0" layoutY="11.0" AnchorPane.leftAnchor="15.0"
+                                        AnchorPane.topAnchor="15.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0"
+                                                     prefWidth="60.0"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER"
+                                                  vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <children>
+                                  <TextField fx:id="dTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0"
+                                             minWidth="50.0" prefHeight="25.0" prefWidth="50.0" promptText="d"/>
+                                </children>
+                              </GridPane>
+                            </children>
+                          </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.rowIndex="2"/>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.rowIndex="1"/>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.rowIndex="3"/>
+                  <Separator prefWidth="200.0" GridPane.columnIndex="1"/>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                  <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                </children>
+              </GridPane>
+              <GridPane layoutX="25.0" layoutY="145.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="60.0">
+                <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0"/>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <children>
+                  <TextField fx:id="thetaTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="θ"/>
+                  <TextField fx:id="phiTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="φ" GridPane.columnIndex="1"/>
+                  <TextField fx:id="rhoTextField" maxHeight="25.0" maxWidth="50.0" minHeight="25.0" minWidth="50.0"
+                             prefHeight="25.0" prefWidth="50.0" promptText="ρ" GridPane.columnIndex="2"/>
+                </children>
+              </GridPane>
+            </children>
+          </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Light">
+        <content>
+          <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+              <GridPane layoutX="50.0" layoutY="25.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="90.0">
+                <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="15.0"/>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="45.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <children>
+                  <TextField GridPane.columnIndex="1" fx:id="lightPositionXTextField"/>
+                  <Label text="Y:" GridPane.rowIndex="1"/>
+                  <Label text="X:"/>
+                  <Label text="Z" GridPane.rowIndex="2"/>
+                  <TextField fx:id="lightPositionYTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                  <TextField fx:id="lightPositionZTextField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                </children>
+              </GridPane>
+              <CheckBox fx:id="lightCheckBox" layoutX="96.0" layoutY="165.0" mnemonicParsing="false" text="Light"
+                        AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0"/>
+              <Label layoutX="64.0" layoutY="58.0" text="Position:" AnchorPane.leftAnchor="30.0"
+                     AnchorPane.topAnchor="60.0"/>
+              <Button layoutX="114.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleDrawButton" text="Draw"
+                      AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="30.0"/>
+            </children>
+          </AnchorPane>
+        </content>
+      </Tab>
+    </tabs>
+  </TabPane>
+  <Separator layoutX="353.0" layoutY="130.0" orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0"
+             AnchorPane.leftAnchor="350.0" AnchorPane.topAnchor="0.0"/>
+</AnchorPane>
